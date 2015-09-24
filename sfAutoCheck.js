@@ -39,10 +39,10 @@ casper.then(function(){
         console.log("filling inputs");
 
         var usernameInput = document.getElementById("userName");
-        usernameInput.value = "steve@extrabux.com";
+        usernameInput.value = "*****"; //please replace with real username
 
         var passwordInput = document.getElementById("password");
-        passwordInput.value = "7895123qaz";
+        passwordInput.value = "*****"; //please replace with real password
     });
     this.click("#loginBtn");
     this.echo("login button was submitted");
