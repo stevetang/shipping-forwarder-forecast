@@ -6,7 +6,7 @@ var casper = require('casper').create({
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.172 Safari/537.22',
 	waitTimeout: 10000,
 	stepTimeout: 30000,
-	timeout: 60000,
+	timeout: 120000,
 	exitOnError: true,
     pageSettings: {
       loadImages:  false,         // The WebPage instance used by Casper will
@@ -47,8 +47,8 @@ if(casper.cli.has('password')){
 
 var trackingNumberList = '';
 var shipmentUrl = 'http://www.zhuanyunbang.com/order/shipment?no=';
-if(casper.cli.has('trackingNumberList')){
-    trackingNumberList = casper.cli.raw.get('trackingNumberList').split(',');
+if(casper.cli.has('trackingNumber')){
+    trackingNumberList = casper.cli.raw.get('trackingNumber').split(',');
 	for (i = 0; i < trackingNumberList.length; i++) { 
 		if(i == trackingNumberList.length-1)
 			shipmentUrl += trackingNumberList[i];
@@ -103,20 +103,20 @@ casper.start(url, function() {
 	this.echo('submit login');
 });
 
-var addressId="";
+var addressId="8134";
 //go to address page
 casper.waitForSelector('div.btn-add', function() {
     this.click('div.user-nav a[href="/user-address/add"]');
 	//click edit
-	casper.waitForSelector(x('//tr[td="自动发货"]/td/a[@class="link-modify"]'),function(){
-		this.click(x('//tr[td="自动发货"]/td/a[@class="link-modify"]'));
-		addressId = this.getElementsAttribute(x('//tr[td="自动发货"]/td/a[@class="link-modify"]'),'href');
+	casper.waitForSelector('a.link-modify[href*="8134"]',function(){
+		this.click('a.link-modify[href*="8134"]');
+		/*addressId = this.getElementsAttribute(x('//tr[td="自动发货"]/td/a[@class="link-modify"]'),'href');
 		//get address id
 		addressId = this.evaluate(function getId(addressId) {
 			var id = addressId.replace("/user-address/edit?id=", "");
 			//console.log(id);
 			return id;
-		},addressId);
+		},addressId);*/
 	})
 }); 
 

@@ -44,8 +44,8 @@ var url = 'http://www.tj-ex.com/';
 var x = require('casper').selectXPath;
 
 var trackingNumberList = '';
-if(casper.cli.has('trackingNumberList')){
-    trackingNumberList = casper.cli.raw.get('trackingNumberList').split(',');
+if(casper.cli.has('trackingNumber')){
+    trackingNumberList = casper.cli.raw.get('trackingNumber').split(',');
 }
 
 var insured = '';
