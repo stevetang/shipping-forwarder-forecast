@@ -43,9 +43,9 @@ casper.on('category.notfound', function() {
 var url = 'http://www.tj-ex.com/';
 var x = require('casper').selectXPath;
 
-var trackingNumber = '';
+var trackingNumberList = '';
 if(casper.cli.has('trackingNumber')){
-    trackingNumber = casper.cli.raw.get('trackingNumber');
+    trackingNumberList = casper.cli.raw.get('trackingNumber').split(',');
 }
 
 var insured = '';
@@ -118,10 +118,14 @@ casper.waitForSelector('a#Menu21',function(){
 
 //search then shipment
 casper.waitForSelector('#ctl00_ctl00_ContentPlaceHolder1_myTJ_txtTransportNumber',function(){
-	casper.repeat(1,function(){
-		this.sendKeys('#ctl00_ctl00_ContentPlaceHolder1_myTJ_txtTransportNumber',trackingNumber);
+	var i=0
+	casper.repeat(trackingNumberList.length,function(){
+		this.evaluate(function(selector) {
+            __utils__.setField(__utils__.findOne(selector), '');
+        }, '#ctl00_ctl00_ContentPlaceHolder1_myTJ_txtTransportNumber');
+		this.sendKeys('#ctl00_ctl00_ContentPlaceHolder1_myTJ_txtTransportNumber',trackingNumberList[i]);
 		this.click('#imageSearch');
-		casper.waitForSelector(x('//td[contains(., "'+trackingNumber+'")]'),function(){
+		casper.waitForSelector(x('//td[contains(., "'+trackingNumberList[i]+'")]'),function(){
 			casper.waitForSelector('tr.AlterColor input[type="checkbox"]',function(){
 				this.click('tr.AlterColor input[type="checkbox"]');
 			},function timeout() { // step to execute if check has failed
@@ -130,8 +134,12 @@ casper.waitForSelector('#ctl00_ctl00_ContentPlaceHolder1_myTJ_txtTransportNumber
 				this.exit();
 			})
 		},function timeout(){
-			this.echo("can't shipment,trackingNumber not found");
+			this.echo("can't shipment,trackingNumber: "+trackingNumberList[i]+" not found");
 			this.exit();
+		});
+		
+		casper.then(function(){
+			i+=1;
 		});
 	});
 	this.thenClick('img[onclick="AddConsignAll(event)"]');

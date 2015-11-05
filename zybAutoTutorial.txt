@@ -1,0 +1,11 @@
+
+自动发货：
+casperjs zybAutoShipment.js --userName=mvpbuyer1@extrabux.com --password=extrabux1234 --trackingNumber=637293138551 --province=湖北 --city=武汉 --district=武昌区 --consigneeName=张诗丹 --phone=15827372770 --address=中南路中建广场c座f层 --zipCode=430000
+
+发货可以多个订单，以,隔开，多个订单就是合箱
+
+自动预报
+casperjs zybAutoFilling.js --userName=mvpbuyer1@extrabux.com --password=extrabux1234 --productNumbers=1 --product1.name=薯片 --product1.category=食物、零售类 --product1.brandName=leshi --product1.quantity=1 --product1.price=169 --house=波特兰免税仓库 --trackingCompany=UPS
+
+house是仓库，有'波特兰免税仓库','日本大阪仓库'
+trackingCompany是快递公司，没有匹配的自动其它
